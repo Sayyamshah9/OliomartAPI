@@ -3,14 +3,14 @@ const mongoose = require('mongoose')
 const userschema = mongoose.Schema({
     username: String,
     email: String,
-    phone: Number,
+    phone: String,
     password: String,
     confirmpassword: String,
     gender: String,
     address: String,
     city: String,
     state: String,
-    userpincode: Number,
+    userpincode: String,
     usertype:  Boolean, // true(default)/(false - Seller)
     //if buyer is false
     sellerid: String,
