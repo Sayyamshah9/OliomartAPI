@@ -15,6 +15,7 @@ app.use('/newbuyer', require('./routers/user/new_buyer'))
 app.use('/newseller', require('./routers/user/new_seller'))
 app.use('/getuser', require('./routers/user/get_user_route'))
 app.use('/passreset', require('./routers/user/password_reset'))
+// app.use('/passreset', require('./routers/user/password_reset'))
 app.use('/deleteuser', require('./routers/user/delete_user'))
 
 //TRIAL GET REQUEST
