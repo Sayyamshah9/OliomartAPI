@@ -2,7 +2,7 @@
 const seller_patch_router = require('express').Router()
 const multer = require('multer')
 const path = require('path')
-const tesseract=require('tesseract.js')
+const tesseract = require('tesseract.js')
 
 //IMPORTING EXTERNAL FILES
 const userschema = require('../../dbschemas/userschema')
@@ -33,11 +33,10 @@ seller_patch_router.patch('/:id', upload.single('img'), async(req,res) =>{
 
     //ADHAAR VERIFICATION CODE
     tesseract.recognize(aphoto,'eng').then(result=>{
-        // console.log(result.data.text)
         var buf = Buffer.from(result.data.text);
         var check=buf.includes(aname) 
         var number=buf.includes(anumber) 
-        
+
         if(check && number){
             
             // ----------------------------------------------------------------------------------------
