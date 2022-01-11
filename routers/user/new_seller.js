@@ -2,10 +2,12 @@
 const seller_patch_router = require('express').Router()
 const multer = require('multer')
 const path = require('path')
-const tesseract = require('tesseract.js')
+const { createWorker } = require('tesseract.js')
+const worker = createWorker()
 
 //IMPORTING EXTERNAL FILES
 const userschema = require('../../dbschemas/userschema')
+const getText = require('../../getText')
 
 //STORAGE ENGINE
 const storage = multer.diskStorage({
@@ -32,21 +34,16 @@ seller_patch_router.patch('/:id', upload.single('img'), async(req,res) =>{
     // ----------------------------------------------------------------------------------------
 
     //ADHAAR VERIFICATION CODE
-    tesseract.recognize(aphoto,'eng').then(result=>{
-        var buf = Buffer.from(result.data.text);
-        var check=buf.includes(aname) 
-        var number=buf.includes(anumber) 
+    
+    getText(aphoto, aname, anumber).then(result => {
 
-        if(check && number){
-            
-            // ----------------------------------------------------------------------------------------
-            //IF VERIFIED UPDATE IN DATABASE CODE
+        if(result.includes(aname) && result.includes(anumber)){
             const update_buyer_to_seller = userschema.findByIdAndUpdate(
                 {_id:req.params.id},
                 {
                     usertype:false,
                     sellerid: Date.now(),
-                    adharphoto: `http://localhost:3000/imgs/${req.file.filename}`,
+                    adharphoto: `https://oliomart.herokuapp.com/imgs/${req.file.filename}`,
                     adharname: req.body.adharname,
                     adharnumber: req.body.adharnumber,
                     sellerverify: true
@@ -56,20 +53,47 @@ seller_patch_router.patch('/:id', upload.single('img'), async(req,res) =>{
                     else{res.json({msg:"Seller Account Created"})}
                 }
             )
-
-            // ----------------------------------------------------------------------------------------
-
-        }else if(!check){
+        }else if(!result.includes(aname)){
             res.json({msg:"Incorrect Name"})
-        }else if(!number){
+        }else if(!result.includes(anumber)){
             res.json({msg:"Incorrect Number"})
         }
-
-        var date=new Date;
-        console.log(date.toLocaleTimeString());
-    }).catch(err=>{
-        console.log(err)
     })
+
+
+        // if(check && number){
+            
+            // ----------------------------------------------------------------------------------------
+            //IF VERIFIED UPDATE IN DATABASE CODE
+        //     const update_buyer_to_seller = userschema.findByIdAndUpdate(
+        //         {_id:req.params.id},
+        //         {
+        //             usertype:false,
+        //             sellerid: Date.now(),
+        //             adharphoto: `https://oliomart.herokuapp.com/imgs/${req.file.filename}`,
+        //             adharname: req.body.adharname,
+        //             adharnumber: req.body.adharnumber,
+        //             sellerverify: true
+        //         },
+        //         (err)=>{
+        //             if(err){res.json({msg:err})}
+        //             else{res.json({msg:"Seller Account Created"})}
+        //         }
+        //     )
+
+        //     // ----------------------------------------------------------------------------------------
+
+        // }else if(!check){
+        //     res.json({msg:"Incorrect Name"})
+        // }else if(!number){
+        //     res.json({msg:"Incorrect Number"})
+        // }
+
+        // var date=new Date;
+        // console.log(date.toLocaleTimeString());
+    // }).catch(err=>{
+    //     console.log(err)
+    // })
 
     // ----------------------------------------------------------------------------------------
 
