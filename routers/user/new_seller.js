@@ -58,6 +58,8 @@ seller_patch_router.patch('/:id', upload.single('img'), async(req,res) =>{
         }else if(!result.includes(anumber)){
             res.json({msg:"Incorrect Number"})
         }
+    }).catch(err=>{
+        console.log(err)
     })
 
 
