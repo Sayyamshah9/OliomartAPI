@@ -60,7 +60,8 @@ seller_patch_router.patch('/:id', upload.single('img'), async(req,res) =>{
         }
     }).catch(err=>{
         console.log(err)
-    })
+        })
+    
 
 
         // if(check && number){

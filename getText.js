@@ -5,7 +5,7 @@ const worker = createWorker()
 // var date=new Date
 // console.log(date.toLocaleTimeString())
 
-module.exports = async function getText(fileName, adharName, adharNumber) {
+module.exports = async function getText(req, res, fileName, adharName, adharNumber) {
 
     var cnt = ""
     
