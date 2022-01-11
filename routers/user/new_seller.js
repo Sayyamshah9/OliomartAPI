@@ -3,6 +3,7 @@ const seller_patch_router = require('express').Router()
 const multer = require('multer')
 const path = require('path')
 const tesseract=require('tesseract.js')
+const authtoken = require('../../validations_and_auths/authentication_token')
 
 //IMPORTING EXTERNAL FILES
 const userschema = require('../../dbschemas/userschema')
@@ -20,7 +21,7 @@ const upload = multer({storage:storage})
 
 
 //PATCH REQUEST FOR CREATING NEW SELLER OR ADDING VALUES TO THE USER BY USING ID
-seller_patch_router.patch('/:id', upload.single('img'), async(req,res) =>{
+seller_patch_router.patch('/:id', authtoken, upload.single('img'), async(req,res) =>{
 
     const aname = req.body.adharname
     const anumber = req.body.adharnumber

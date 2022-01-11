@@ -1,6 +1,7 @@
 //IMPORTING DEPENDENCIES
 const buyer_post_router = require('express').Router()
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 
 //IMPORTING EXTERNAL FILES
 const userschema = require('../../dbschemas/userschema')
@@ -60,8 +61,15 @@ buyer_post_router.post('/login', async(req,res) => {
     const isPasswordExist = await bcrypt.compare(req.body.password, isEmailExist.password)
     if(!isPasswordExist) return res.json({msg:"Invalid Password"})
 
-    res.json({msg:"Loggedd in"})
+    const newToken = jwt.sign({_id: isEmailExist._id}, process.env.TOKEN_KEY)
+    res.header('auth_token', newToken)
 
+    res.json(
+        {
+            msg:"Logged in",
+            username: isEmailExist.username,
+            jtoken:newToken
+        })
 })
 
 module.exports = buyer_post_router

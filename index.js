@@ -2,12 +2,14 @@
 const express = require('express')
 const app = express()
 require('dotenv').config({path:"./configurations/.env"})
+const cors = require('cors')
 
 //IMPORTING OTHER ROUTES/FUNCTION/FILES
 const DBIsConnected = require('./configurations/dbconnect')
 
 //MIDDLEWARE
 app.use(express.json())
+app.use(cors())
 app.use('/imgs', express.static('./images/adharcard')) //making images folder public so that we can access it.
 
 //ROUTES

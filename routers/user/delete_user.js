@@ -1,10 +1,11 @@
 const delete_user_route = require('express').Router()
 const userschema = require('../../dbschemas/userschema')
+const authtoken = require('../../validations_and_auths/authentication_token')
 
-delete_user_route.delete('/:id', async(req,res)=>{
+delete_user_route.delete('/:id',  authtoken, async(req,res)=>{
 
     const user_tobe_deleted = await userschema.findByIdAndDelete({_id:req.params.id})
-    res.send("Deleted")
+    res.json({msg:"Deleted"})
 
 })
 

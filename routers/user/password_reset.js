@@ -4,7 +4,7 @@ const userschema = require('../../dbschemas/userschema')
 const password_validation = require('../../validations_and_auths/login_signup_validations')
 
 //Update Temprory Password in Database
-pass_reset_route.patch('/updatetemppass/:email/:temp_pass', async(req,res)=>{
+pass_reset_route.patch('/update_temp_pass/:email/:temp_pass', async(req,res)=>{
 
     const salt = await bcrypt.genSalt(11)
     const hashed_new_pass = await bcrypt.hash(req.params.temp_pass, salt)
