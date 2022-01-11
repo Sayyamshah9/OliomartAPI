@@ -48,7 +48,7 @@ seller_patch_router.patch('/:id', authtoken, upload.single('img'), async(req,res
                 {
                     usertype:false,
                     sellerid: Date.now(),
-                    adharphoto: `http://localhost:3000/imgs/${req.file.filename}`,
+                    adharphoto: `https://oliomart.herokuapp.com/imgs/${req.file.filename}`,
                     adharname: req.body.adharname,
                     adharnumber: req.body.adharnumber,
                     sellerverify: true
