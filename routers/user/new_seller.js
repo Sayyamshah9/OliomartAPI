@@ -25,7 +25,7 @@ seller_patch_router.patch('/:id', authtoken, upload.single('img'), async(req,res
 
     const aname = req.body.adharname
     const anumber = req.body.adharnumber
-    const aphoto = `http://localhost:3000/imgs/${req.file.filename}`
+    const aphoto = `https://oliomart.herokuapp.com/${req.file.filename}`
 
     var date=new Date
     console.log(date.toLocaleTimeString())
