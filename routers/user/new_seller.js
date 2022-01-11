@@ -2,8 +2,7 @@
 const seller_patch_router = require('express').Router()
 const multer = require('multer')
 const path = require('path')
-const tesseract=require('tesseract.js')
-const authtoken = require('../../validations_and_auths/authentication_token')
+const tesseract = require('tesseract.js')
 
 //IMPORTING EXTERNAL FILES
 const userschema = require('../../dbschemas/userschema')
@@ -21,11 +20,11 @@ const upload = multer({storage:storage})
 
 
 //PATCH REQUEST FOR CREATING NEW SELLER OR ADDING VALUES TO THE USER BY USING ID
-seller_patch_router.patch('/:id', authtoken, upload.single('img'), async(req,res) =>{
+seller_patch_router.patch('/:id', upload.single('img'), async(req,res) =>{
 
     const aname = req.body.adharname
     const anumber = req.body.adharnumber
-    const aphoto = `https://oliomart.herokuapp.com/${req.file.filename}`
+    const aphoto = `https://oliomart.herokuapp.com/imgs/${req.file.filename}`
 
     var date=new Date
     console.log(date.toLocaleTimeString())
@@ -33,13 +32,12 @@ seller_patch_router.patch('/:id', authtoken, upload.single('img'), async(req,res
     // ----------------------------------------------------------------------------------------
 
     //ADHAAR VERIFICATION CODE
-    // tesseract.recognize(aphoto,'eng').then(result=>{
-    //     // console.log(result.data.text)
-    //     var buf = Buffer.from(result.data.text);
-    //     var check=buf.includes(aname) 
-    //     var number=buf.includes(anumber) 
-        
-        // if(check && number){
+    tesseract.recognize(aphoto,'eng').then(result=>{
+        var buf = Buffer.from(result.data.text);
+        var check=buf.includes(aname) 
+        var number=buf.includes(anumber) 
+
+        if(check && number){
             
             // ----------------------------------------------------------------------------------------
             //IF VERIFIED UPDATE IN DATABASE CODE
@@ -61,17 +59,17 @@ seller_patch_router.patch('/:id', authtoken, upload.single('img'), async(req,res
 
             // ----------------------------------------------------------------------------------------
 
-        // }else if(!check){
-        //     res.json({msg:"Incorrect Name"})
-        // }else if(!number){
-        //     res.json({msg:"Incorrect Number"})
-        // }
+        }else if(!check){
+            res.json({msg:"Incorrect Name"})
+        }else if(!number){
+            res.json({msg:"Incorrect Number"})
+        }
 
         var date=new Date;
         console.log(date.toLocaleTimeString());
-    // }).catch(err=>{
-    //     console.log(err)
-    // })
+    }).catch(err=>{
+        console.log(err)
+    })
 
     // ----------------------------------------------------------------------------------------
 
