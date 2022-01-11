@@ -33,13 +33,13 @@ seller_patch_router.patch('/:id', authtoken, upload.single('img'), async(req,res
     // ----------------------------------------------------------------------------------------
 
     //ADHAAR VERIFICATION CODE
-    tesseract.recognize(aphoto,'eng').then(result=>{
-        // console.log(result.data.text)
-        var buf = Buffer.from(result.data.text);
-        var check=buf.includes(aname) 
-        var number=buf.includes(anumber) 
+    // tesseract.recognize(aphoto,'eng').then(result=>{
+    //     // console.log(result.data.text)
+    //     var buf = Buffer.from(result.data.text);
+    //     var check=buf.includes(aname) 
+    //     var number=buf.includes(anumber) 
         
-        if(check && number){
+        // if(check && number){
             
             // ----------------------------------------------------------------------------------------
             //IF VERIFIED UPDATE IN DATABASE CODE
@@ -61,17 +61,17 @@ seller_patch_router.patch('/:id', authtoken, upload.single('img'), async(req,res
 
             // ----------------------------------------------------------------------------------------
 
-        }else if(!check){
-            res.json({msg:"Incorrect Name"})
-        }else if(!number){
-            res.json({msg:"Incorrect Number"})
-        }
+        // }else if(!check){
+        //     res.json({msg:"Incorrect Name"})
+        // }else if(!number){
+        //     res.json({msg:"Incorrect Number"})
+        // }
 
         var date=new Date;
         console.log(date.toLocaleTimeString());
-    }).catch(err=>{
-        console.log(err)
-    })
+    // }).catch(err=>{
+    //     console.log(err)
+    // })
 
     // ----------------------------------------------------------------------------------------
 
