@@ -49,7 +49,7 @@ seller_patch_router.patch('/:id', upload.single('img'), async(req,res) =>{
                     sellerverify: true
                 },
                 (err)=>{
-                    if(err){res.json({msg:err})}
+                    if(err){result.json({msg:err})}
                     else{res.json({msg:"Seller Account Created"})}
                 }
             )
