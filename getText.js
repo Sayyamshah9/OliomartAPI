@@ -14,7 +14,7 @@ module.exports = async function getText(req, res, fileName, adharName, adharNumb
     await worker.initialize('eng')
 
     const{data:{text}} = await worker.recognize(fileName)
-    await worker.terminate()
+    // await worker.terminate()
     // console.log(text)
     var date=new Date
     console.log(date.toLocaleTimeString())
