@@ -14,7 +14,7 @@ const regristration_validation = register =>{
         city: Joi.string().min(1).required(),
         state: Joi.string().min(1).required(),
         userpincode: Joi.string().length(6).required(),
-        usertype: Joi.boolean(),
+        role: Joi.string().default("buyer"),
         sellerid: Joi.string(),
         adharphoto: Joi.string(),
         adharname: Joi.string(),
@@ -29,7 +29,7 @@ const regristration_validation = register =>{
 const login_user = login =>{
     const loginuser = Joi.object({
         email: Joi.string().email().required(),
-        password: oi.string().min(1).required()
+        password: Joi.string().min(1).required()
     })
     return loginuser.validate(login)
 }

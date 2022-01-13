@@ -33,7 +33,7 @@ buyer_post_router.post('/register', async(req,res)=>{
         city: req.body.city,
         state: req.body.state,
         userpincode: req.body.userpincode,
-        usertype: true,
+        role: "buyer",
         sellerid: null,
         adharphoto: null,
         adharname: null,
@@ -42,7 +42,10 @@ buyer_post_router.post('/register', async(req,res)=>{
     })
     try {
         const useradded = await newuser.save()
-        res.json(useradded)
+        res.json({
+            _id: useradded._id,
+            email:useradded.email
+        })
     } catch (error) {
         res.json({msg:error})
     }
@@ -61,6 +64,7 @@ buyer_post_router.post('/login', async(req,res) => {
     const isPasswordExist = await bcrypt.compare(req.body.password, isEmailExist.password)
     if(!isPasswordExist) return res.json({msg:"Invalid Password"})
 
+    //GENERATING TOKEN
     const newToken = jwt.sign({_id: isEmailExist._id}, process.env.TOKEN_KEY)
     res.header('auth_token', newToken)
 

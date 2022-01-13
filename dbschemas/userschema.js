@@ -11,8 +11,8 @@ const userschema = mongoose.Schema({
     city: String,
     state: String,
     userpincode: String,
-    usertype:  Boolean, // true(default)/(false - Seller)
-    //if buyer is false
+    role:  String, // buyer, seller, admin
+    //for seller
     sellerid: String,
     adharphoto: String,
     adharname: String,

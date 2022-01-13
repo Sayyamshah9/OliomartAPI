@@ -2,12 +2,11 @@
 const seller_patch_router = require('express').Router()
 const multer = require('multer')
 const path = require('path')
-const { createWorker } = require('tesseract.js')
-const worker = createWorker()
 
 //IMPORTING EXTERNAL FILES
 const userschema = require('../../dbschemas/userschema')
 const getText = require('../../getText')
+const authToken = require('../../validations_and_auths/authentication_token')
 
 //STORAGE ENGINE
 const storage = multer.diskStorage({
@@ -22,11 +21,11 @@ const upload = multer({storage:storage})
 
 
 //PATCH REQUEST FOR CREATING NEW SELLER OR ADDING VALUES TO THE USER BY USING ID
-seller_patch_router.patch('/:id', upload.single('img'), async(req,res) =>{
+seller_patch_router.patch('/:id', upload.single('img'), authToken, async(req,res) =>{
 
     const aname = req.body.adharname
     const anumber = req.body.adharnumber
-    const aphoto = `https://oliomart.herokuapp.com/imgs/${req.file.filename}`
+    const aphoto = `${process.env.URL}/imgs/${req.file.filename}`
 
     var date=new Date
     console.log(date.toLocaleTimeString())
@@ -38,21 +37,22 @@ seller_patch_router.patch('/:id', upload.single('img'), async(req,res) =>{
     getText(aphoto, aname, anumber).then(result => {
 
         if(result.includes(aname) && result.includes(anumber)){
+
             const update_buyer_to_seller = userschema.findByIdAndUpdate(
                 {_id:req.params.id},
                 {
                     usertype:false,
                     sellerid: Date.now(),
-                    adharphoto: `https://oliomart.herokuapp.com/imgs/${req.file.filename}`,
+                    adharphoto: `${process.env.URL}/imgs/${req.file.filename}`,
                     adharname: req.body.adharname,
                     adharnumber: req.body.adharnumber,
                     sellerverify: true
                 },
                 (err)=>{
-                    if(err){result.json({msg:err})}
+                    if(err) return res.json({msg:err})
                     else{res.json({msg:"Seller Account Created"})}
-                }
-            )
+                })
+
         }else if(!result.includes(aname)){
             res.json({msg:"Incorrect Name"})
         }else if(!result.includes(anumber)){
