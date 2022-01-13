@@ -41,7 +41,7 @@ seller_patch_router.patch('/:id', upload.single('img'), authToken, async(req,res
             const update_buyer_to_seller = userschema.findByIdAndUpdate(
                 {_id:req.params.id},
                 {
-                    usertype:false,
+                    role:"seller",
                     sellerid: Date.now(),
                     adharphoto: `${process.env.URL}/imgs/${req.file.filename}`,
                     adharname: req.body.adharname,
