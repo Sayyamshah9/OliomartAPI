@@ -23,6 +23,11 @@ app.use('/newseller', require('./routers/user/new_seller'))
 
 //product-routes
 app.use('/newproduct', require('./routers/products/upload_product'))
+app.use('/getproducts', require('./routers/products/get_random_products'))
+
+//order-routes
+app.use('/neworder', require('./routers/orders/orders_router'))
+app.use('/getordersdetails', require('./routers/orders/get_order_details'))
 
 //TRIAL GET REQUEST
 app.get('/', (req, res) => {
