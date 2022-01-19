@@ -1,7 +1,8 @@
 const new_order_router = require('express').Router()
 const orderSchema = require('../../dbschemas/orderschema')
+const authToken = require('../../validations_and_auths/authentication_token')
 
-new_order_router.post('/:id', async(req,res) => {
+new_order_router.post('/:id', authToken, async(req,res) => {
 
 
     let lengthOfArray = req.body.oquantity
@@ -10,7 +11,7 @@ new_order_router.post('/:id', async(req,res) => {
         var p = req.body.oprice[i] * req.body.oquantity[i];
         priceArray.push(p)
     }
-    
+
     const newOrder = new orderSchema({
 
         ouserid: req.params.id,

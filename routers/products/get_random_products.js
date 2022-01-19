@@ -1,7 +1,8 @@
 const get_random_product_router = require('express').Router()
 const productSchema = require('../../dbschemas/productschema')
+const authToken = require('../../validations_and_auths/authentication_token')
 
-get_random_product_router.get('/', async(req,res)=>{
+get_random_product_router.get('/', authToken, async(req,res)=>{
 
     productSchema.aggregate([
         {$sample: {size: 11}}

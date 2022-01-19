@@ -3,6 +3,7 @@ const multer = require('multer');
 const path = require('path')
 
 const product = require('../../dbschemas/productschema')
+const authToken = require('../../validations_and_auths/authentication_token')
 
 //CREATING STORAGE ENGINE
 const storageEngine = multer.diskStorage({
@@ -21,7 +22,7 @@ const uploadProduct = multer({
 })
 
 
-upload_product_route.post('/:id', uploadProduct.array('productimgs', 3), async(req, res) =>{
+upload_product_route.post('/:id', authToken, uploadProduct.array('productimgs', 3), async(req, res) =>{
     
     let imgArray = []
     let c = 0
