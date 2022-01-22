@@ -1,13 +1,18 @@
 const pass_reset_route = require('express').Router()
 const bcrypt = require('bcryptjs')
 const userschema = require('../../dbschemas/userschema')
-const password_validation = require('../../validations_and_auths/login_signup_validations')
+const resetPass = require('../../configurations/send_email')
 
-//Update Temprory Password in Database
-pass_reset_route.patch('/update_temp_pass/:email/:temp_pass', async(req,res)=>{
+//Send Mail to User & Update Temprory Password in Database
+pass_reset_route.patch('/sendmail/:email', async(req,res)=>{
+
+    const userExist = await userschema.findOne({email:req.params.email})
+    if(!userExist) return res.json({msg:"User Does not exist"})
+
+    const temp_pass = resetPass(req.params.email, userExist.username)
 
     const salt = await bcrypt.genSalt(11)
-    const hashed_new_pass = await bcrypt.hash(req.params.temp_pass, salt)
+    const hashed_new_pass = await bcrypt.hash(temp_pass, salt)
 
     userschema.findOneAndUpdate({email:req.params.email}, 
         {
