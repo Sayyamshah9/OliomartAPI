@@ -24,6 +24,7 @@ buyer_post_router.post('/register', async(req,res)=>{
 
     const newuser = new userschema({
         otp: null,
+        isOtpVerified: false,
         username: req.body.username,
         email: req.body.email,
         phone: req.body.phone,

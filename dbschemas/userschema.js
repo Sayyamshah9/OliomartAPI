@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 
 const userschema = mongoose.Schema({
     otp:Number,
+    isOtpVerified: Boolean,
     username: String,
     email: String,
     phone: String,
