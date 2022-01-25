@@ -20,6 +20,7 @@ app.use('/getuser', require('./routers/user/get_user_route'))
 app.use('/passreset', require('./routers/user/password_reset'))
 app.use('/deleteuser', require('./routers/user/delete_user'))
 app.use('/newseller', require('./routers/user/new_seller'))
+app.use('/sendotp', require('./routers/user/send_email_otp'))
 
 //product-routes
 app.use('/newproduct', require('./routers/products/upload_product'))

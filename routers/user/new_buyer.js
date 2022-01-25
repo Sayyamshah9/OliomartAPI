@@ -23,16 +23,13 @@ buyer_post_router.post('/register', async(req,res)=>{
     const hashedpass = await bcrypt.hash(req.body.password, salt)
 
     const newuser = new userschema({
+        otp: null,
         username: req.body.username,
         email: req.body.email,
         phone: req.body.phone,
         password: hashedpass,
         confirmpassword: hashedpass,
         gender:req.body.gender,
-        address:req.body.address,
-        city: req.body.city,
-        state: req.body.state,
-        userpincode: req.body.userpincode,
         role: "buyer",
         sellerid: null,
         adharphoto: null,
@@ -50,6 +47,24 @@ buyer_post_router.post('/register', async(req,res)=>{
         res.json({msg:error})
     }
 
+})
+
+//UPDATE ADDRESS INFORMATION
+buyer_post_router.patch('/updateaddress/:id', async(req,res) => {
+
+    const userInfo = userschema.findByIdAndUpdate(
+        req.params.id,        
+        {
+            address:req.body.address,
+            city: req.body.city,
+            state: req.body.state,
+            userpincode: req.body.userpincode
+        },
+        (err)=>{
+            if(err) return res.json({msg: err})
+            res.json({msg:"Address added"})
+        }
+    )
 })
 
 //LOGIN ROUTE

@@ -55,4 +55,35 @@ function resetPass(sendTo,userName) {
   return ranDom
 }
 
-module.exports = resetPass
+// to generate random otp
+var ranDomOtp = Math.floor(100000 + Math.random() * 900000);
+// console.log(ranDomOtp);
+
+function sendEmailOtp(sendTo, userName){
+    
+  var subject = "Email Verification";
+  var msg = `<body >
+                    <h3>Hi ${userName},</h3>
+                   <br><br>
+                    
+                        <p>Your OTP is <b>${ranDomOtp}<b>
+                           
+                          <p style='color:red'><b>*Note:*</b>Valid for next 10 minutes</p>
+                            If you did not request a OTP, please ignore this email or reply to let us know.</p>
+                            <br>
+                            <br>
+                            <p>Thanks, Oliomart team</p>
+                               
+                </body>`;
+
+  const mailOp = email_details(sendTo, subject, msg);
+  transporter.sendMail(mailOp, function (error, info) {
+    if (error) {
+      return error
+    }
+    return true
+  })
+  return ranDomOtp
+}
+
+module.exports = {resetPass, sendEmailOtp}
