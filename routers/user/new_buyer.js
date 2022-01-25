@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken')
 
 //IMPORTING EXTERNAL FILES
 const userschema = require('../../dbschemas/userschema')
-const { regristration_validation } = require('../../validations_and_auths/login_signup_validations')
+const { regristration_validation, addressValidation } = require('../../validations_and_auths/login_signup_validations')
 
 //POST REQUEST FOR CREATING USER OF TYPE BUYER
 buyer_post_router.post('/register', async(req,res)=>{
@@ -51,6 +51,10 @@ buyer_post_router.post('/register', async(req,res)=>{
 
 //UPDATE ADDRESS INFORMATION
 buyer_post_router.patch('/updateaddress/:id', async(req,res) => {
+
+    //VALIDATING USER
+    const {error} = addressValidation(req.body)
+    if(error) return res.json({msg:error.details[0].message})
 
     const userInfo = userschema.findByIdAndUpdate(
         req.params.id,        
