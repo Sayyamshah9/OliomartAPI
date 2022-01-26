@@ -3,7 +3,7 @@ var dotEnv = require("dotenv").config();
 
 // send email code
 var transporter = nodemailer.createTransport({
-  service: "hotmail",
+  service: "gamil",
   auth: {
     user: process.env.EMAILID,
     pass: process.env.EMAILPASSWORD,
