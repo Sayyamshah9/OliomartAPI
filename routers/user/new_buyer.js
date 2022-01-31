@@ -12,11 +12,11 @@ buyer_post_router.post('/register', async(req,res)=>{
 
     //VALIDATING USER
     const {error} = regristration_validation(req.body)
-    if(error) return res.json({msg:error.details[0].message})
+    if(error) return res.status(400).json({msg:error.details[0].message})
 
     //CHECK IF USER ALREADY EXIST
     const doExist = await userschema.findOne({email:req.body.email})
-    if(doExist) return res.json({msg:"User Already Exist"})
+    if(doExist) return res.status(400).json({msg:"User Already Exist"})
 
     //HASHING PASSWORD
     const salt = await bcrypt.genSalt(11)
@@ -40,12 +40,12 @@ buyer_post_router.post('/register', async(req,res)=>{
     })
     try {
         const useradded = await newuser.save()
-        res.json({
+        res.status(400).json({
             _id: useradded._id,
             email:useradded.email
         })
     } catch (error) {
-        res.json({msg:error})
+        res.status(400).json({msg:error})
     }
 
 })
@@ -55,7 +55,7 @@ buyer_post_router.patch('/updateaddress/:id', async(req,res) => {
 
     //VALIDATING USER
     const {error} = addressValidation(req.body)
-    if(error) return res.json({msg:error.details[0].message})
+    if(error) return res.status(400).json({msg:error.details[0].message})
 
     const userInfo = userschema.findByIdAndUpdate(
         req.params.id,        
@@ -67,7 +67,7 @@ buyer_post_router.patch('/updateaddress/:id', async(req,res) => {
         },
         (err)=>{
             if(err) return res.json({msg: err})
-            res.json({msg:"Address added"})
+            res.status(200).json({msg:"Address added"})
         }
     )
 })
@@ -78,17 +78,17 @@ buyer_post_router.post('/login', async(req,res) => {
     //VALIDATING USER
     //check if email entered by user is correct or not
     const isEmailExist = await userschema.findOne({email:req.body.email})
-    if(!isEmailExist) return res.json({msg:"Invalid Email"})
+    if(!isEmailExist) return res.status(400).json({msg:"Invalid Email"})
 
     //check if password entered by user is correct or not
     const isPasswordExist = await bcrypt.compare(req.body.password, isEmailExist.password)
-    if(!isPasswordExist) return res.json({msg:"Invalid Password"})
+    if(!isPasswordExist) return res.status(400).json({msg:"Invalid Password"})
 
     //GENERATING TOKEN
     const newToken = jwt.sign({_id: isEmailExist._id}, process.env.TOKEN_KEY)
     res.header('auth_token', newToken)
 
-    res.json(
+    res.status(200).json(
         {
             msg:"Logged in",
             username: isEmailExist.username,
