@@ -40,7 +40,7 @@ buyer_post_router.post('/register', async(req,res)=>{
     })
     try {
         const useradded = await newuser.save()
-        res.status(400).json({
+        res.status(200).json({
             _id: useradded._id,
             email:useradded.email
         })
@@ -66,7 +66,7 @@ buyer_post_router.patch('/updateaddress/:id', async(req,res) => {
             userpincode: req.body.userpincode
         },
         (err)=>{
-            if(err) return res.json({msg: err})
+            if(err) return res.status(400).json({msg: err})
             res.status(200).json({msg:"Address added"})
         }
     )
