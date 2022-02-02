@@ -40,10 +40,7 @@ buyer_post_router.post('/register', async(req,res)=>{
     })
     try {
         const useradded = await newuser.save()
-        res.status(200).json({
-            _id: useradded._id,
-            email:useradded.email
-        })
+        res.status(200).json({msg: "Registered Successfully!"})
     } catch (error) {
         res.status(400).json({msg:error})
     }
@@ -91,7 +88,9 @@ buyer_post_router.post('/login', async(req,res) => {
     res.status(200).json(
         {
             msg:"Logged in",
+            _id: isEmailExist._id,
             username: isEmailExist.username,
+            email:isEmailExist.email,
             jtoken:newToken
         })
 })
