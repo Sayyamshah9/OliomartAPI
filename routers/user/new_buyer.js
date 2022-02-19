@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken')
 
 //IMPORTING EXTERNAL FILES
 const userschema = require('../../dbschemas/userschema')
-const { regristration_validation, addressValidation } = require('../../validations_and_auths/login_signup_validations')
+const { regristration_validation, addressValidation, login_user } = require('../../validations_and_auths/login_signup_validations')
 
 //POST REQUEST FOR CREATING USER OF TYPE BUYER
 buyer_post_router.post('/register', async(req,res)=>{
@@ -73,6 +73,9 @@ buyer_post_router.patch('/updateaddress/:id', async(req,res) => {
 buyer_post_router.post('/login', async(req,res) => {
 
     //VALIDATING USER
+    const {error} = login_user(req.body)
+    if(error) return res.status(400).json({msg:error.details[0].message})
+
     //check if email entered by user is correct or not
     const isEmailExist = await userschema.findOne({email:req.body.email})
     if(!isEmailExist) return res.status(400).json({msg:"Invalid Email"})

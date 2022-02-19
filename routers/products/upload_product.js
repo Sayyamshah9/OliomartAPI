@@ -48,7 +48,7 @@ upload_product_route.post('/:id', authToken, uploadProduct.array('productimgs', 
         veg: false,   
         pcolor: req.body.pcolor,
         psize: req.body.psize,
-        pkeywords: req.body.keywords,
+        pkeywords: req.body.pkeywords,
         pverify: false
 
     })
