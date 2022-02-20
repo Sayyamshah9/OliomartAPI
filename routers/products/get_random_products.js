@@ -10,7 +10,7 @@ get_random_product_router.get('/', authToken, async(req,res)=>{
     ], 
         function(err, docs) {
         res.json(docs)
-});
+    });
 
 })
 

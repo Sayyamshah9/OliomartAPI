@@ -16,7 +16,7 @@ const productschema = mongoose.Schema({
     psubcategory: String,
     qty: Number,
     price: Number,
-    pimages: [Object],
+    pimages: [String],
     pweight: Number,
     manufacturedate: String,
     expirydate: String,
