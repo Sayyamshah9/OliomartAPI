@@ -11,8 +11,8 @@ const newOrder = mongoose.Schema({
     oquantity: [Number],
     oprice: [Number],
     ototalprice: Number,
-    osize: String,
-    ocolors: String,
+    osize: [String],
+    ocolors: [String],
     dstatus: Boolean,
     pfeedback: String
 
