@@ -5,12 +5,12 @@ const authToken = require('../../validations_and_auths/authentication_token')
 new_order_router.post('/:id', authToken, async(req,res) => {
 
 
-    let lengthOfArray = req.body.oquantity
-    let priceArray = []
-    for (let i = 0; i < lengthOfArray.length; i++) {
-        var p = req.body.oprice[i] * req.body.oquantity[i];
-        priceArray.push(p)
-    }
+    // let lengthOfArray = req.body.oquantity
+    // let priceArray = []
+    // for (let i = 0; i < lengthOfArray.length; i++) {
+    //     var p = req.body.oprice[i] * req.body.oquantity[i];
+    //     priceArray.push(p)
+    // }
 
     const newOrder = new orderSchema({
 
@@ -18,7 +18,8 @@ new_order_router.post('/:id', authToken, async(req,res) => {
         productid: req.body.productid,
         oquantity: req.body.oquantity,
         oprice: req.body.oprice,
-        ototalprice: priceArray.reduce((prevIndex, currentIndex) => prevIndex + currentIndex),
+        // ototalprice: priceArray.reduce((prevIndex, currentIndex) => prevIndex + currentIndex),
+        ototalprice : req.body.oquantity * req.body.oprice,
         osize: req.body.osize,
         ocolors: req.body.ocolors,
         dstatus: false,

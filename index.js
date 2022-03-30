@@ -30,6 +30,16 @@ app.use('/getproducts', require('./routers/products/get_random_products'))
 app.use('/neworder', require('./routers/orders/orders_router'))
 app.use('/getordersdetails', require('./routers/orders/get_order_details'))
 
+//cart-routes
+app.use('/addtocart', require('./routers/cart/add_cart'))
+app.use('/getcartdetails' , require('./routers/cart/get_cart'))
+app.use('/deletecart', require('./routers/cart/delete_cart'))
+
+//wishlist-routes
+app.use('/addtowishlist', require('./routers/wishlist/add_wishlist'))
+app.use('/getwishlist', require('./routers/wishlist/get_wishlist'))
+app.use('/deletewishlist', require('./routers/wishlist/delete_wishlist'))
+
 //TRIAL GET REQUEST
 app.get('/', (req, res) => {
     res.send("Working")

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const productdata = require('./productschema')
 
 const newOrder = mongoose.Schema({
 
@@ -7,13 +8,16 @@ const newOrder = mongoose.Schema({
     //     ref: 'productdata'
     // }
     ouserid: String,
-    productid: [String],
-    oquantity: [Number],
-    oprice: [Number],
+    productid: {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : productdata
+    }, //remove array populate-frome productschema
+    oquantity: Number, //remove array
+    oprice: Number, //remove array
     ototalprice: Number,
-    osize: [String],
-    ocolors: [String],
-    dstatus: Boolean,
+    osize: String, //remove array
+    ocolors: String, //remove array
+    dstatus: Boolean, 
     pfeedback: String
 
 })
