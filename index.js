@@ -25,6 +25,7 @@ app.use('/sendotp', require('./routers/user/send_email_otp'))
 //product-routes
 app.use('/newproduct', require('./routers/products/upload_product'))
 app.use('/getproducts', require('./routers/products/get_random_products'))
+app.use('/getproductdetails', require('./routers/products/get_product')) 
 
 //order-routes
 app.use('/neworder', require('./routers/orders/orders_router'))

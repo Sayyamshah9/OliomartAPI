@@ -13,7 +13,7 @@ router.get('/', authToken, async (req,res) => {
 router.get('/:id', authToken, async(req,res) => {
 
     const user = await userschema.findById(req.params.id)
-    res.json(user)
+    res.status(200).json(user)
     
 })
 
