@@ -6,6 +6,7 @@ get_orders_router.get('/:id', authToken, async(req,res)=>{
 
     try{
         const getorders = await orderSchema.find({ouserid: req.params.id})
+                                           .populate("productid")
         res.json(getorders)
     }catch(err){
         res.json({msg:err})
